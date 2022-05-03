@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "94258907",
+    "project_id": "musicipssi",
+    "storage_bucket": "musicipssi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94258907:android:22a469662f1e2c69c1aefe",
+        "android_client_info": {
+          "package_name": "com.example.musicipssi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94258907-e397op6jq8f2fq3ugg5a5mumj92pq7t3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK-BZtJutYaDe09SzV8aZa-WuoOWk-K1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94258907-e397op6jq8f2fq3ugg5a5mumj92pq7t3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
