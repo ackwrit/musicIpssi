@@ -66,6 +66,7 @@ class InscriptionState extends State<Inscription>{
             });
           },
         ),
+        SizedBox(height: 10,),
 
 
         ElevatedButton(

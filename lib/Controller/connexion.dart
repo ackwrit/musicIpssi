@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musicipssi/fonctions/FirestoreHelper.dart';
 
 class Connexion extends StatefulWidget{
   @override
@@ -10,8 +11,39 @@ class Connexion extends StatefulWidget{
 }
 
 class ConnexionState extends State<Connexion>{
+  //Variable
   String mail ="";
   String password ="";
+
+
+
+
+  //Fonctions
+
+  Dialogue(){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context){
+          return AlertDialog(
+            title: const Text("Erreur"),
+            content: const Text("Votre adresse mail/ ou votre mot a été mal saisie"),
+            actions: [
+
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Ok")
+              ),
+            ],
+          );
+        }
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -41,16 +73,23 @@ class ConnexionState extends State<Connexion>{
           ),
           onChanged: (value){
             setState(() {
-              mail = value;
+              password = value;
             });
           },
         ),
+        SizedBox(height: 10,),
 
 
         //Bouton pour la connexion
         ElevatedButton(
             onPressed: (){
               // Se connecter
+              FirestoreHelper().connect(mail, password).then((value){
+
+              }).catchError((error){
+                Dialogue();
+
+              });
             },
             child: Text("Connexion")
         )
