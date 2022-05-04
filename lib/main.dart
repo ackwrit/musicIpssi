@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:musicipssi/Controller/Inscription.dart';
 import 'package:musicipssi/Controller/connexion.dart';
-import 'package:musicipssi/modelView/customPath.dart';
+import 'package:musicipssi/modelView/fondEcran.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: Stack(
         children: [
-          fondEcran(),
+         FondEcran(),
           bodyPage(),
 
 
@@ -112,20 +112,5 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  Widget fondEcran(){
-    return ClipPath(
-      clipper: customPath(),
-      child : Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/ange-5l.jpg"),
-            fit: BoxFit.fill
 
-          )
-        ),
-      )
-    );
-  }
 }

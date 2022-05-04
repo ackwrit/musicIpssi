@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:musicipssi/View/DashBoard.dart';
 import 'package:musicipssi/fonctions/FirestoreHelper.dart';
+import 'package:musicipssi/library/constant.dart';
 
 class Inscription extends StatefulWidget{
   @override
@@ -95,14 +97,21 @@ class InscriptionState extends State<Inscription>{
             });
           },
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
 
 
         ElevatedButton(
             onPressed: (){
               // s'inscrire
               FirestoreHelper().register(prenom, nom, mail, password).then((value){
-
+                  setState(() {
+                    MonUser = value;
+                  });
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return DashBoard();
+                      }
+                  ));
               }).catchError((error){
                 Dialogue();
               });

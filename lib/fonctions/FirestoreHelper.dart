@@ -16,7 +16,9 @@ class FirestoreHelper {
 
 
       //Inscription un utilisateur
-    Future register(String prenom , String nom , String mail , String password) async {
+
+
+    Future <Profil> register(String prenom , String nom , String mail , String password) async {
       UserCredential resultat = await auth.createUserWithEmailAndPassword(email: mail, password: password);
       String uid = resultat.user!.uid;
       Map<String,dynamic> map = {
@@ -27,6 +29,7 @@ class FirestoreHelper {
           "ISCONNECTED": true,
         };
       addUser(uid,map);
+      return getProfil(uid);
     }
 
 

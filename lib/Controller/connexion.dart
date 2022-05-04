@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:musicipssi/View/DashBoard.dart';
 import 'package:musicipssi/fonctions/FirestoreHelper.dart';
+import 'package:musicipssi/library/constant.dart';
 
 class Connexion extends StatefulWidget{
   @override
@@ -85,6 +87,15 @@ class ConnexionState extends State<Connexion>{
             onPressed: (){
               // Se connecter
               FirestoreHelper().connect(mail, password).then((value){
+                setState(() {
+                  MonUser = value;
+                });
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return DashBoard();
+                    }
+                ));
+
 
               }).catchError((error){
                 Dialogue();

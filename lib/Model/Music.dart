@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:musicipssi/library/lib.dart';
 
 class Music {
   //Attributs
@@ -51,4 +52,3 @@ class Music {
 }
 
 
-enum type {rap,soul,techno,rock,zouk,reggae,rnb,jazz}
