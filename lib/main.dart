@@ -60,6 +60,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  //Variable
+  bool selected = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           fondEcran(),
           bodyPage(),
+
+
         ],
       ),
 
@@ -78,7 +83,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget bodyPage(){
-    return const Text("coucou");
+    return  Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Inscription"),
+            Switch(
+                value: selected,
+                onChanged: (value){
+                  setState(() {
+                    selected = value;
+                  });
+                }
+            ),
+            Text("Connexion"),
+          ],
+
+        ),
+
+      ],
+    );
   }
 
 
@@ -88,7 +114,13 @@ class _MyHomePageState extends State<MyHomePage> {
       child : Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Colors.red,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/ange-5l.jpg"),
+            fit: BoxFit.fill
+
+          )
+        ),
       )
     );
   }
