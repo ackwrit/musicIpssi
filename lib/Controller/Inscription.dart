@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musicipssi/fonctions/FirestoreHelper.dart';
 
 class Inscription extends StatefulWidget{
   @override
@@ -10,10 +11,38 @@ class Inscription extends StatefulWidget{
 }
 
 class InscriptionState extends State<Inscription>{
+  //variables
   String prenom = "";
   String nom = "";
   String mail = "";
   String password = "";
+
+
+
+
+  //Fonctions
+   Dialogue(){
+     showDialog(
+          barrierDismissible: false,
+         context: context,
+         builder: (context){
+           return AlertDialog(
+             title: const Text("Erreur"),
+             content: const Text("Votre inscription ne s'est pas effectuée"),
+             actions: [
+               ElevatedButton(
+                   onPressed: (){
+                     Navigator.pop(context);
+                   },
+                   child: const Text("Ok")
+               )
+             ],
+           );
+         }
+     );
+   }
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -72,6 +101,11 @@ class InscriptionState extends State<Inscription>{
         ElevatedButton(
             onPressed: (){
               // s'inscrire
+              FirestoreHelper().register(prenom, nom, mail, password).then((value){
+
+              }).catchError((error){
+                Dialogue();
+              });
             },
             child: Text("Inscription")
         )
