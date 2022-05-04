@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:musicipssi/Controller/Inscription.dart';
+import 'package:musicipssi/Controller/connexion.dart';
 import 'package:musicipssi/modelView/customPath.dart';
 
 void main() async {
@@ -89,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Inscription"),
+            const Text("Inscription"),
             Switch(
                 value: selected,
                 onChanged: (value){
@@ -98,10 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 }
             ),
-            Text("Connexion"),
+            const Text("Connexion"),
           ],
 
         ),
+        (selected)?Connexion():Inscription()
+
 
       ],
     );
