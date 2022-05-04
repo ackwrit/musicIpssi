@@ -23,13 +23,14 @@ class ImageRondState extends State<ImageRond>{
 
   Widget bodyPage(){
     return Container(
-      height: 80,
-      width: 80,
+      height: 120,
+      width: 120,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: (MonUser.image == null)?NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/noPicture.jpeg?alt=media&token=2c929236-5eca-4f9b-b713-4988ef2a91d2"):NetworkImage(MonUser.image!),
+          image: (MonUser.image == null)?const NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/cover.jpg?alt=media&token=2371302d-bac7-415b-86ff-180d60643a5d"):NetworkImage(MonUser.image!),
           fit: BoxFit.fill
+
         )
       ),
 

@@ -1,4 +1,9 @@
+import 'package:awesome_icons/awesome_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:musicipssi/Model/Music.dart';
+import 'package:musicipssi/View/ajouterMusic.dart';
+import 'package:musicipssi/fonctions/FirestoreHelper.dart';
 import 'package:musicipssi/modelView/fondEcran.dart';
 import 'package:musicipssi/modelView/myDrawer.dart';
 
@@ -22,7 +27,7 @@ class DashBoardState extends State<DashBoard>{
         width: MediaQuery.of(context).size.width/3,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
-            color: Colors.white,
+            color: Colors.amber,
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(40))
         ),
 
@@ -32,6 +37,19 @@ class DashBoardState extends State<DashBoard>{
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        actions: [
+          IconButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return ajouterMusic();
+
+                    }
+                ));
+              },
+              icon: const Icon(FontAwesomeIcons.plusCircle,color: Colors.amber,)
+          )
+        ],
       ),
       extendBodyBehindAppBar: true,
       //extendBody: true,
@@ -54,7 +72,38 @@ class DashBoardState extends State<DashBoard>{
 
   }
   Widget bodyPage(){
-    return const Text("Je suis dans la Dahsboard");
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirestoreHelper().fireMusic.snapshots(),
+        builder: (context,snapshot){
+          print(snapshot.data?.docs);
+          if(snapshot.data?.docs == null){
+
+            return const Center(
+              child: Text("Pas de musique existante ...."),
+            );
+          }
+          else
+            {
+              List documents = snapshot.data!.docs;
+               return GridView.builder(
+                  itemCount: documents.length,
+                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                   itemBuilder: (context,index){
+                     Music morceau = Music(documents[index]);
+                     return Container(
+                       decoration: BoxDecoration(
+                         image: DecorationImage(
+                           image: (morceau.pochette == null)?const NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/cover.jpg?alt=media&token=2371302d-bac7-415b-86ff-180d60643a5d")
+                               :NetworkImage(morceau.pochette!),
+                           fit: BoxFit.fill
+                         )
+                       ),
+                     );
+                   }
+               );
+            }
+        }
+    );
   }
 
 }

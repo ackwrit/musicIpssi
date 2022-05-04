@@ -39,6 +39,7 @@ dependencies:
   firebase_core: ^1.16.0
   cloud_firestore: ^3.1.14
   file_picker: ^4.5.1
+  awesome_icons: ^1.1.0
 
 dev_dependencies:
   flutter_test:
