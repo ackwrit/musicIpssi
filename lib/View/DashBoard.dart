@@ -91,26 +91,31 @@ class DashBoardState extends State<DashBoard>{
                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                    itemBuilder: (context,index){
                      Music morceau = Music(documents[index]);
-                     return InkWell(
-                       child: Container(
+                     return Hero(
+                         tag: morceau.uid,
+                         child: InkWell(
+                           child: Container(
 
-                         decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(10),
-                             image: DecorationImage(
-                                 image: (morceau.pochette == null)?const NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/cover.jpg?alt=media&token=2371302d-bac7-415b-86ff-180d60643a5d"):NetworkImage(morceau.pochette!),
-                                 fit: BoxFit.fill
-                             )
-                         ),
-                       ),
-                       onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context){
-                                return detailMusic(musique: morceau,);
-                              }
-                          ));
-                       },
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(10),
+                                 image: DecorationImage(
+                                     image: (morceau.pochette == null)?const NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/cover.jpg?alt=media&token=2371302d-bac7-415b-86ff-180d60643a5d"):NetworkImage(morceau.pochette!),
+                                     fit: BoxFit.fill
+                                 )
+                             ),
+                           ),
+                           onTap: (){
+                             Navigator.push(context, MaterialPageRoute(
+                                 builder: (context){
+                                   return detailMusic(musique: morceau,);
+                                 }
+                             ));
+                           },
 
+                         )
                      );
+
+
 
                    }
                );

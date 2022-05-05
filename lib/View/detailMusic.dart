@@ -27,6 +27,7 @@ class detailMusicState extends State<detailMusic>{
   late StreamSubscription positionStream;
   late StreamSubscription stateStream;
   Duration dureeTotal = Duration(seconds: 0);
+  Duration dureeTriche = Duration(seconds:800);
   double volumeSound = 0.5;
   bool isPlaying = false;
 
@@ -80,6 +81,13 @@ class detailMusicState extends State<detailMusic>{
   //play
   Future play() async {
     await audioPlayer.play(widget.musique.lienMusic,position: positionnement,volume: volumeSound);
+    if(positionnement == dureeTotal){
+      setState(() {
+        lecture = statut.stopped;
+        positionnement = const Duration(seconds: 0);
+      });
+
+    }
   }
 
 
@@ -87,13 +95,61 @@ class detailMusicState extends State<detailMusic>{
   Future pause() async{
     await audioPlayer.pause();
 
+
+  }
+
+  Future stop() async {
+    await audioPlayer.stop();
   }
 
 
   //avance rapide
+  forward(){
+    if(positionnement.inSeconds +10 <= dureeTotal.inSeconds){
+      setState(() {
+        pause();
+        positionnement = Duration(seconds: positionnement.inSeconds.toInt() +10);
+        play();
+      });
+    }
+    else
+      {
+        setState(() {
+          stop();
+          lecture = statut.stopped;
+          positionnement = const Duration(seconds: 0);
+        });
+      }
+
+  }
+
+
 
 
   //Retour en arrière
+  rewind(){
+    if(positionnement >= Duration(seconds : 10)){
+      setState(() {
+        pause();
+        positionnement = Duration(seconds: positionnement.inSeconds.toInt() - 10);
+        play();
+
+      });
+
+    }
+    else
+    {
+      setState(() {
+        pause();
+        positionnement = Duration(seconds: 0);
+        play();
+
+      });
+    }
+  }
+
+
+
 
 
   @override
@@ -127,15 +183,21 @@ class detailMusicState extends State<detailMusic>{
     return Column(
       children: [
         //Pochette
-        Container(
-          height: 300,
-          width: 450,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: (widget.musique.pochette == null)?NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/cover.jpg?alt=media&token=2371302d-bac7-415b-86ff-180d60643a5d"):NetworkImage(widget.musique.pochette!)
-            )
+        Hero(
+          tag: widget.musique.uid,
+          child:  AnimatedContainer(
+            duration: Duration(seconds: 2),
+            height: (lecture == statut.stopped)?150:300,
+            width: (lecture == statut.stopped)?250:450,
+            curve: Curves.elasticOut,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: (widget.musique.pochette == null)?NetworkImage("https://firebasestorage.googleapis.com/v0/b/musicipssi.appspot.com/o/cover.jpg?alt=media&token=2371302d-bac7-415b-86ff-180d60643a5d"):NetworkImage(widget.musique.pochette!)
+                )
+            ),
           ),
         ),
+
 
 
         // Titre de la musique
@@ -161,6 +223,7 @@ class detailMusicState extends State<detailMusic>{
             //fast_forward
             IconButton(
                 onPressed: (){
+                  rewind();
 
                 },
                 icon: const Icon(FontAwesomeIcons.backward),
@@ -191,7 +254,7 @@ class detailMusicState extends State<detailMusic>{
 
             IconButton(
               onPressed: (){
-
+                  forward();
               },
               icon: const Icon(FontAwesomeIcons.forward),
             ),
@@ -218,7 +281,7 @@ class detailMusicState extends State<detailMusic>{
 
         Slider(
             min: 0.0,
-            max: dureeTotal.inSeconds.toDouble(),
+            max: dureeTriche.inSeconds.toDouble(),
             value: positionnement.inSeconds.toDouble(),
             onChanged: (newValue){
               setState(() {
