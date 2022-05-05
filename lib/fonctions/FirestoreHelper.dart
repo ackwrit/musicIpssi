@@ -1,7 +1,10 @@
 
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:musicipssi/Model/Profil.dart';
 
 class FirestoreHelper {
@@ -79,7 +82,20 @@ class FirestoreHelper {
     }
 
 
-      //Stockage une image
+      //Stockage une fichier
+      Future<String> stockageFile(String nameFile,Uint8List datas, bool imageSelected) async {
+        late String pathFile;
+        late TaskSnapshot snap;
+        if(imageSelected){
+           snap = await storage.ref("pictures/$nameFile").putData(datas);
+        }
+        else
+          {
+           snap = await storage.ref("songs/$nameFile").putData(datas);
+          }
+        pathFile = await snap.ref.getDownloadURL();
+        return pathFile;
+      }
 
 
 

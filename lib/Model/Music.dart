@@ -39,7 +39,8 @@ class Music {
     Map<String,dynamic> map = snapshot.data() as Map<String,dynamic>;
     _nameMusic = map["NAMEMUSIC"];
     _lienMusic = map ["LIENMUSIC"];
-    category = map["CATEGORY"];
+    String value = map["CATEGORY"];
+    category = conversion(value);
     artist = map["ARTIST"];
     Timestamp timestamp = map["SORTIE"];
     sortie = timestamp.toDate();
@@ -49,6 +50,22 @@ class Music {
 
 
   //Méthode
+
+  type conversion(String str){
+    switch(str){
+      case "type.rap" : return type.rap;
+      case "type.soul" : return type.soul;
+      case "type.techno" : return type.techno;
+      case "type.rock" : return type.rock;
+      case "type.zouk" : return type.zouk;
+      case "type.reggae" : return type.reggae;
+      case "type.rnb" : return type.rnb;
+      case "type.jazz" :return type.jazz;
+      default: return type.rap;
+    }
+  }
 }
+
+
 
 
