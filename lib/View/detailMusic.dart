@@ -34,18 +34,23 @@ class detailMusicState extends State<detailMusic>{
 
   //Fonction
   configurationPlayer(){
+    //Cette instruction définit le morceau qui sera lu
     audioPlayer.setUrl(widget.musique.lienMusic);
+    //Cette instruction définit lors de la lecture , la variable positionnement récupéra la durée ou la lecture est situé
     positionStream = audioPlayer.onAudioPositionChanged.listen((event) {
       setState(() {
         positionnement = event;
       });
     });
+    //Affection du la durée totale lors de la lecture
       audioPlayer.onDurationChanged.listen((event) {
         setState(() {
           print("durée total $event");
           dureeTotal = event;
         });
       });
+
+      //affectation de la durrée lors du changement de statut et affectatio des différents status lors du changement de l'état de lecture
       stateStream = audioPlayer.onPlayerStateChanged.listen((event) {
           if(event == statut.playing){
             setState(() async {
@@ -153,6 +158,7 @@ class detailMusicState extends State<detailMusic>{
 
 
 
+  //la fonction init est la prmière fonction a être appelé lors de la création de la page
   @override
   void initState() {
     // TODO: implement initState
@@ -165,6 +171,13 @@ class detailMusicState extends State<detailMusic>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            stop();
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
@@ -227,7 +240,7 @@ class detailMusicState extends State<detailMusic>{
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //fast_forward
+            //Icon retour en arrière
             IconButton(
                 onPressed: (){
                   rewind();
@@ -236,7 +249,7 @@ class detailMusicState extends State<detailMusic>{
                 icon: const Icon(FontAwesomeIcons.backward),
             ),
 
-            //
+            // Icon lecture ou pause suivant la état de lecture l'icon change avec le ternaire
             (lecture == statut.stopped)? IconButton(
               onPressed: (){
                 setState(() {
@@ -258,7 +271,7 @@ class detailMusicState extends State<detailMusic>{
             ),
 
 
-
+            //Icon avaace rapide
             IconButton(
               onPressed: (){
                   forward();
@@ -266,11 +279,6 @@ class detailMusicState extends State<detailMusic>{
               icon: const Icon(FontAwesomeIcons.forward),
             ),
 
-
-
-
-
-            //fast_rewind
           ],
         ),
 
@@ -292,6 +300,8 @@ class detailMusicState extends State<detailMusic>{
             value: positionnement.inSeconds.toDouble(),
             onChanged: (newValue){
               setState(() {
+                //lorsque l'utilisateur change la valeur du Slider
+                //la  lecture se repositionne à la nouvelle position de lecture
                 Duration time = Duration(seconds: newValue.toInt());
                 positionnement = time;
                 audioPlayer.seek(positionnement);

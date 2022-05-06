@@ -33,6 +33,26 @@ class ajouterMusicState extends State<ajouterMusic>{
 
 
   //Fonctions
+
+  //Selcetionner une date
+
+  selectedDate(BuildContext context) async{
+   final DateTime? selectedDate = await
+   showDatePicker(context: context,
+       initialDate: sortie,
+       firstDate: DateTime(1950),
+       currentDate: sortie,
+       lastDate: sortie,
+   );
+   if(selectedDate != null && selectedDate!= sortie){
+     setState(() {
+       sortie = selectedDate;
+     });
+   }
+
+
+
+  }
   recuperFichier() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       withData: true,
@@ -183,6 +203,15 @@ class ajouterMusicState extends State<ajouterMusic>{
 
 
         //Date de sortie
+        ElevatedButton.icon(
+            onPressed: (){
+              selectedDate(context);
+            },
+            icon: Icon(FontAwesomeIcons.calendarTimes),
+            label: Text("Date")
+        ),
+
+
 
 
         //Categorie
@@ -219,7 +248,7 @@ class ajouterMusicState extends State<ajouterMusic>{
                   "NAMEMUSIC": title,
                   "LIENMUSIC": lien,
                   "CATEGORY": myCategorie.toString(),
-                  "SORTIE": DateTime.now(),
+                  "SORTIE": sortie,
                   "ARTIST": artist,
                   "POCHETTE": pochette,
                   "ALBUM": album,

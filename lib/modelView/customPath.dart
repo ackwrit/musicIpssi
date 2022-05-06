@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+
+
+//Cette classe à pour but de créer un chemin
 class customPath extends CustomClipper<Path>{
   @override
   Path getClip(Size size) {
