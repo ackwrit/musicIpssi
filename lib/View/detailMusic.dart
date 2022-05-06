@@ -39,6 +39,7 @@ class detailMusicState extends State<detailMusic>{
       setState(() {
         positionnement = event;
       });
+    });
       audioPlayer.onDurationChanged.listen((event) {
         setState(() {
           print("durée total $event");
@@ -71,7 +72,7 @@ class detailMusicState extends State<detailMusic>{
 
 
 
-    });
+
   }
 
 
@@ -171,8 +172,14 @@ class detailMusicState extends State<detailMusic>{
       body: Stack(
         children: [
           FondEcran(),
-          Center(
-            child:  bodyPage(),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(20),
+            child:Center(
+              child:  bodyPage(),
+            ) ,
+
           )
         ],
       ),
@@ -273,20 +280,22 @@ class detailMusicState extends State<detailMusic>{
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(positionnement.toString()),
+            Text(positionnement.toString().substring(2,7)),
 
-            Text(dureeTotal.toString())
+            Text(dureeTotal.toString().substring(2,7))
           ],
         ),
 
         Slider(
             min: 0.0,
-            max: dureeTriche.inSeconds.toDouble(),
+            max: dureeTotal.inSeconds.toDouble(),
             value: positionnement.inSeconds.toDouble(),
             onChanged: (newValue){
               setState(() {
                 Duration time = Duration(seconds: newValue.toInt());
                 positionnement = time;
+                audioPlayer.seek(positionnement);
+
 
               });
             }
